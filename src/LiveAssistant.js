@@ -8,7 +8,6 @@ function LiveAssistant() {
   var chatbox = null;
   function appendMessage(sender, message, senderClass) {
     const messageElement = document.createElement("div");
-    console.log("MessageElement", messageElement);
     messageElement.classList.add("message");
     messageElement.classList.add(senderClass);
     messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
@@ -17,10 +16,8 @@ function LiveAssistant() {
 
   function sendMessage() {
     chatbox = chatBoxRef.current;
-    console.log("chatbox", chatbox);
     const userInput = document.getElementById("userInput");
     const loader = document.getElementById("loading-bubbles");
-    console.log("userINPUT:", userInput);
     const message = userInput.value;
     appendMessage("You", message, "user-message");
     chatbox.appendChild(loader);

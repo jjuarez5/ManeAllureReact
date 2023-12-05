@@ -19,6 +19,7 @@ function About() {
         Alma was able to maintain her expertise by doing freelance make-up, hair
         cut and color, as well as men's cuts. Upon moving to Seattle,
         Washington, Alma soon began as a colorist apprentice at the prestigious
+        &nbsp;
         <a
           href="https://www.genejuarez.com/locations/bellevue/"
           target="blank"
@@ -26,7 +27,7 @@ function About() {
         >
           Gene Juarez Salon and Spa
         </a>
-        studying under several premier colorists before becoming a master
+        &nbsp;studying under several premier colorists before becoming a master
         colorist herself.
       </p>
     </section>

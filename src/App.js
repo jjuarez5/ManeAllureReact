@@ -4,6 +4,7 @@ import About from "./About";
 import Booking from "./Booking";
 import Gallery from "./Gallery";
 import LiveAssistant from "./LiveAssistant";
+import LocationInfo from "./LocationInfo";
 import Footer from "./Footer";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Booking />
       <Gallery />
       <LiveAssistant />
+      <LocationInfo />
       <Footer />
     </div>
   );
