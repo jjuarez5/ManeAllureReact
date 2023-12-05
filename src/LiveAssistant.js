@@ -27,7 +27,7 @@ function LiveAssistant() {
       userMessage: message,
     };
 
-    fetch("faqappservice.azurewebsites.net/api/FAQ", {
+    fetch("https://faqappservice.azurewebsites.net/api/FAQ", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
