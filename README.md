@@ -25,6 +25,7 @@ Welcome to The Mane Allure, a stylish hair salon built with Create React App and
  ┃ ┣ 📜 Gallery.js
  ┃ ┣ 📜 index.js
  ┃ ┣ 📜 LiveAssistant.js
+ ┃ ┣ 📜 LocationInfo.js
  ┃ ┣ 📜 Splash.js
  ┃ ┗ 📜 Navbar.js
  ┣ 📜 .gitignore
