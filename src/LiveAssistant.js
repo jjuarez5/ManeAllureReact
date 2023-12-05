@@ -1,59 +1,68 @@
 import "./css/chatbox.css";
+import { useRef } from "react";
 
-const chatbox = document.getElementById("messageContainer");
 //const loadingConversation = document.querySelector(".loading-bubbles");
 
-function appendMessage(sender, message, senderClass) {
-  const messageElement = document.createElement("div");
-  messageElement.classList.add("message");
-  messageElement.classList.add(senderClass);
-  messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
-  chatbox.appendChild(messageElement);
-}
-
-function sendMessage() {
-  const userInput = document.getElementById("userInput");
-  const loader = document.getElementById("loading-bubbles");
-  console.log("userINPUT:", userInput);
-  const message = userInput.value;
-  appendMessage("You", message, "user-message");
-  chatbox.appendChild(loader);
-  loader.style.display = "inline-flex";
-  userInput.value = "";
-  const userMessageObj = {
-    userMessage: message,
-  };
-
-  fetch("https://localhost:7223/api/FAQ", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    mode: "cors",
-    body: JSON.stringify(userMessageObj),
-  })
-    .then((response) => response.text())
-    .then((data) => {
-      loader.style.display = "none";
-      const botMessage = data || "Sorry, I don't have an answer for that.";
-      appendMessage("TheManeAllureGPT", botMessage, "assistant-message");
-    })
-    .catch((err) => {
-      const botMessage =
-        "Oops, something went wrong 😭, let's try again later!";
-      loader.style.display = "none";
-      appendMessage("TheManeAllureGPT", botMessage, "assistant-message");
-    });
-}
-
 function LiveAssistant() {
+  const chatBoxRef = useRef(null);
+  var chatbox = null;
+  function appendMessage(sender, message, senderClass) {
+    const messageElement = document.createElement("div");
+    console.log("MessageElement", messageElement);
+    messageElement.classList.add("message");
+    messageElement.classList.add(senderClass);
+    messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+    chatbox.appendChild(messageElement);
+  }
+
+  function sendMessage() {
+    chatbox = chatBoxRef.current;
+    console.log("chatbox", chatbox);
+    const userInput = document.getElementById("userInput");
+    const loader = document.getElementById("loading-bubbles");
+    console.log("userINPUT:", userInput);
+    const message = userInput.value;
+    appendMessage("You", message, "user-message");
+    chatbox.appendChild(loader);
+    loader.style.display = "inline-flex";
+    userInput.value = "";
+    const userMessageObj = {
+      userMessage: message,
+    };
+
+    fetch("https://localhost:7223/api/FAQ", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+      body: JSON.stringify(userMessageObj),
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        loader.style.display = "none";
+        const botMessage = data || "Sorry, I don't have an answer for that.";
+        appendMessage("TheManeAllureGPT", botMessage, "assistant-message");
+      })
+      .catch((err) => {
+        const botMessage =
+          "Oops, something went wrong 😭, let's try again later!";
+        loader.style.display = "none";
+        appendMessage("TheManeAllureGPT", botMessage, "assistant-message");
+      });
+  }
+
   return (
     <section id="chat" className="container mx-auto my-8 text-black bg-black">
       <h2 className="text-6xl font-bold mb-4 text-center text-white shadow-sm shadow-white">
         ManeGPT
       </h2>
       <div className="max-w-md mx-auto bg-white p-4 rounded-md shadow-md">
-        <div className="message-container" id="messageContainer">
+        <div
+          className="message-container"
+          id="messageContainer"
+          ref={chatBoxRef}
+        >
           <div className="assistant-message message bg-blue-200 rounded-md p-4 mb-2">
             <strong>ManeGPT:</strong> How can I assist you today?
           </div>
