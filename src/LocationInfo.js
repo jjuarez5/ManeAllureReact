@@ -1,4 +1,3 @@
-import { FaFacebook } from "react-icons/fa6";
 import { SiTiktok } from "react-icons/si";
 import { FaInstagram } from "react-icons/fa";
 
