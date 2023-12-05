@@ -39,13 +39,13 @@ function LiveAssistant() {
       .then((data) => {
         loader.style.display = "none";
         const botMessage = data || "Sorry, I don't have an answer for that.";
-        appendMessage("TheManeAllureGPT", botMessage, "assistant-message");
+        appendMessage("ManeGPT", botMessage, "assistant-message");
       })
       .catch((err) => {
         const botMessage =
           "Oops, something went wrong 😭, let's try again later!";
         loader.style.display = "none";
-        appendMessage("TheManeAllureGPT", botMessage, "assistant-message");
+        appendMessage("ManeGPT", botMessage, "assistant-message");
       });
   }
 
