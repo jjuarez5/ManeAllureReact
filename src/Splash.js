@@ -18,13 +18,13 @@ function Splash() {
           </div> */}
           <img
             src={AlmaLogo}
-            alt="Image 1"
+            alt="The Mane Allure Logo"
             className="mx-auto h-auto w-3/4 sm:object-cover sm:h-screen sm:w-1/2 sm:m-2"
           />
 
           <img
             src={Almabw}
-            alt="Image 2"
+            alt="Alma Juarez, Master Colorist"
             className="mx-auto h-auto w-3/4 sm:object-cover sm:h-screen sm:w-1/2 sm:m-2"
           />
         </div>
