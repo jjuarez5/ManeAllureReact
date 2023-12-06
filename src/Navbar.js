@@ -3,7 +3,7 @@ function Navbar() {
     <nav className="bg-black text-white fixed top-0 z-50 w-full pb-2 shadow-sm shadow-white">
       <div className="flex justify-center">
         <a href="#home">
-          <h2 className="text-6xl font-bilbo">The Mane Allure</h2>
+          <h2 className="text-6xl font-semibold">The Mane Allure</h2>
         </a>
       </div>
       <ul className="flex flex-row justify-center sm:justify-end">
