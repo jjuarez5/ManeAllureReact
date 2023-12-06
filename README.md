@@ -1,12 +1,12 @@
 # The Mane Allure Salon Website
 
-Welcome to The Mane Allure, a stylish hair salon built with Create React App and styled with Tailwind CSS. 💇‍♀️✨
+Welcome to [The Mane Allure](https://www.themaneallure.com), a stylish hair salon built with Create React App and styled with Tailwind CSS. 💇‍♀️✨
 
 ## Technologies Used
 
 🌐- **Create React App**: The foundation of our web application.
 ✈️- **Tailwind CSS**: Powering the beautiful and responsive design.
-👨🏽‍💻💻 - Done by **JJuarez5**
+👨🏽‍💻💻 - Done by **jj juarez**
 
 ## Project Structure
 
