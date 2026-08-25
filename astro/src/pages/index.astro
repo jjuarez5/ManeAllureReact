@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Splash from "../components/Splash.astro";
+import About from "../components/About.astro";
+import Booking from "../components/Booking.astro";
+import Gallery from "../components/Gallery.astro";
+import LocationInfo from "../components/LocationInfo.astro";
+import Footer from "../components/Footer.astro";
+import Marquee from "../components/Marquee.astro";
+import Services from "../components/Services.astro";
+import LiveAssistant from "../components/LiveAssistant.jsx";
+
+const links = [
+  { href: "#about-me", label: "ABOUT" },
+  { href: "#services", label: "SERVICES" },
+  { href: "#booking", label: "BOOKING" },
+  { href: "#gallery", label: "GALLERY" },
+  { href: "#chat", label: "MANEGPT" },
+  { href: "#location", label: "VISIT" },
+];
+---
+
+<Layout
+  title="The Mane Allure | Houston Hair Colorist & Balayage Specialist"
+  description="Houston hair colorist specializing in balayage, foliayage, blonding and custom color. Dimensional color by master colorist Alma Juarez at The Mane Allure in Houston, TX."
+  path="/"
+  includeSchema={true}
+>
+  <Navbar links={links} />
+  <Splash />
+  <Marquee text="MEET THE COLORIST" />
+  <About />
+  <Services />
+  <Marquee text="BOOK A FREE CONSULTATION" />
+  <Booking />
+  <Gallery />
+  <!--
+    The only component on the site that ships JavaScript. client:visible
+    defers loading React until the user actually scrolls the chat into view.
+  -->
+  <LiveAssistant client:visible />
+  <Marquee text="HOUSTON, TX" />
+  <LocationInfo />
+  <Footer />
+</Layout>

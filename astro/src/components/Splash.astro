@@ -1,0 +1,131 @@
+---
+import { Image } from "astro:assets";
+import AlmaLogo from "../images/Alma Logo Transparent.png";
+import Almabw from "../images/Almabw.jpg";
+import { business } from "../data/business.js";
+
+const services = business.services.filter((s) => s !== "Color Correction");
+---
+
+<section id="home" class="px-4 pt-44 pb-10 sm:pt-48">
+  <div class="mx-auto max-w-3xl">
+    <!--
+      Dual-screen handheld. Top screen carries the title-screen content
+      (including the keyword-bearing H1); bottom screen is the START control,
+      which is a real link to the booking system.
+    -->
+    <div class="ds-shell mx-auto max-w-2xl">
+      <!-- ---------- TOP SCREEN ---------- -->
+      <div class="ds-screen">
+        <div class="ds-display px-4 py-8 text-center sm:px-8 sm:py-10">
+          <Image
+            src={AlmaLogo}
+            alt="The Mane Allure logo"
+            class="mx-auto mb-5 w-20 sm:w-24"
+            loading="eager"
+          />
+
+          <h1 class="pixel-title text-base leading-relaxed sm:text-2xl">
+            THE MANE ALLURE
+          </h1>
+
+          <p
+            class="pixel-title--green mx-auto mt-5 max-w-lg font-pixel text-[8px] leading-relaxed sm:text-[11px]"
+          >
+            Houston Hair Colorist &amp; Dimensional Color Specialist
+          </p>
+
+          <ul
+            class="mt-5 flex flex-wrap items-center justify-center gap-2 font-pixel text-[7px] sm:text-[9px]"
+          >
+            {
+              services.map((service) => (
+                <li class="border-2 border-black bg-neon-pink px-2 py-1 text-white">
+                  {service}
+                </li>
+              ))
+            }
+          </ul>
+
+          <p class="mt-5 font-crt text-xl text-white sm:text-2xl">
+            By {business.stylist.shortName}
+          </p>
+        </div>
+      </div>
+
+      <!-- ---------- HINGE ---------- -->
+      <div class="ds-hinge" aria-hidden="true">
+        <span class="ds-hinge__dot"></span>
+        <span class="ds-hinge__dot"></span>
+        <span class="ds-hinge__dot"></span>
+        <span class="ds-hinge__dot"></span>
+        <span class="ds-hinge__dot"></span>
+      </div>
+
+      <!-- ---------- BOTTOM SCREEN + CONTROLS ---------- -->
+      <div class="flex items-center justify-center gap-4">
+        <div class="ds-dpad hidden sm:block" aria-hidden="true"></div>
+
+        <div class="ds-screen flex-1">
+          <div class="ds-display">
+            <a
+              href={business.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="ds-start"
+            >
+              <span class="blink block text-sm sm:text-xl">▶ PRESS START</span>
+              <span
+                class="mt-3 block font-crt text-lg text-neon-yellow sm:text-xl"
+              >
+                Book your appointment
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div class="ds-face-btns hidden sm:grid" aria-hidden="true">
+          <span class="ds-face-btn"></span>
+          <span class="ds-face-btn"></span>
+          <span class="ds-face-btn"></span>
+          <span class="ds-face-btn"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Player card, below the console -->
+    <div class="mt-12 flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
+      <div class="crt-frame w-56 shrink-0">
+        <Image
+          src={Almabw}
+          alt={`${business.stylist.shortName}, ${business.stylist.jobTitle}`}
+          class="h-72 w-full object-cover"
+          loading="eager"
+        />
+      </div>
+
+      <div class="pixel-window w-full max-w-xs">
+        <div class="pixel-window__bar">
+          <span>PLAYER 01</span>
+          <span class="flex gap-1">
+            <span class="pixel-window__btn"></span>
+            <span class="pixel-window__btn"></span>
+            <span class="pixel-window__btn"></span>
+          </span>
+        </div>
+        <div class="pixel-window__body">
+          <p class="pixel-label mb-3">Hello !!</p>
+          <p><strong>Stylist:</strong> {business.stylist.shortName}</p>
+          <p class="mt-2"><strong>Class:</strong> {business.stylist.jobTitle}</p>
+          <p class="mt-2">
+            <strong>Mission:</strong> Dimensional color built around your hair,
+            not a template.
+          </p>
+          <p class="mt-2">
+            <strong>Base:</strong> {business.address.city}, {business.address.region}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

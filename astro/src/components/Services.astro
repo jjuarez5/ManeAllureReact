@@ -1,0 +1,41 @@
+---
+import { services } from "../data/services.js";
+
+const ordered = [...services].sort((a, b) => a.order - b.order);
+---
+
+<section id="services" class="px-4 py-16">
+  <div class="mx-auto max-w-6xl">
+    <div class="mb-8 text-center">
+      <p class="pixel-kicker">LEVEL 02</p>
+      <h2 class="pixel-title mt-3 font-pixel text-2xl sm:text-4xl">
+        CHOOSE YOUR CLASS
+      </h2>
+      <p class="mt-4 font-crt text-2xl text-lavender">
+        Every color service starts with a free consultation
+      </p>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        ordered.map((service) => (
+          <a href={`/${service.slug}`} class="pixel-window block">
+            <div class="pixel-window__bar">
+              <span>{service.kicker}</span>
+              <span class="flex gap-1">
+                <span class="pixel-window__btn" />
+                <span class="pixel-window__btn" />
+                <span class="pixel-window__btn" />
+              </span>
+            </div>
+            <div class="pixel-window__body">
+              <p class="pixel-label mb-3">{service.name}</p>
+              <p>{service.cardBlurb}</p>
+              <p class="mt-4 font-pixel text-[9px]">ENTER ▸</p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

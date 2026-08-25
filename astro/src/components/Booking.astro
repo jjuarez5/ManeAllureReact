@@ -1,0 +1,45 @@
+---
+import { business } from "../data/business.js";
+---
+
+<section id="booking" class="px-4 py-16">
+  <div class="mx-auto max-w-3xl">
+    <div class="mb-8 text-center">
+      <p class="pixel-kicker">LEVEL 03</p>
+      <h2 class="pixel-title--green mt-3 font-pixel text-2xl sm:text-4xl">
+        START YOUR QUEST
+      </h2>
+    </div>
+
+    <div class="pixel-window">
+      <div class="pixel-window__bar">
+        <span>! NOTICE</span>
+        <span class="flex gap-1">
+          <span class="pixel-window__btn"></span>
+          <span class="pixel-window__btn"></span>
+          <span class="pixel-window__btn"></span>
+        </span>
+      </div>
+      <div class="pixel-window__body text-center">
+        <p class="pixel-label mb-4">New Player?</p>
+        <p class="text-2xl">
+          First time clients must book a free consultation prior to any color
+          appointments.
+        </p>
+        <div class="mt-6 flex flex-wrap items-center justify-center gap-4">
+          <a
+            href={business.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="pixel-btn"
+          >
+            BOOK NOW
+          </a>
+          <a href={`tel:${business.telephone}`} class="pixel-btn pixel-btn--pink">
+            ☎ {business.telephoneDisplay}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

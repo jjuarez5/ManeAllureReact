@@ -1,0 +1,21 @@
+---
+import { business } from "../data/business.js";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t-4 border-neon-pink bg-void px-4 py-8">
+  <div class="mx-auto flex max-w-4xl flex-col items-center gap-3 text-center">
+    <div class="flex items-center gap-3" aria-hidden="true">
+      <span class="sprite-star"></span>
+      <span class="sprite-heart"></span>
+      <span class="sprite-star"></span>
+    </div>
+
+    <p class="font-pixel text-[9px] text-neon-green">GAME OVER? NEVER.</p>
+
+    <p class="font-crt text-xl text-white">
+      <span class="text-neon-pink">{business.legalName}</span> &copy; {year}
+    </p>
+  </div>
+</footer>

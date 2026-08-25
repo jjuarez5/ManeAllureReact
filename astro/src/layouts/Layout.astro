@@ -1,0 +1,78 @@
+---
+import "../styles/global.css";
+import { business, localBusinessSchema } from "../data/business.js";
+import Clouds from "../components/Clouds.astro";
+
+const {
+  title,
+  description,
+  /** Canonical path for this page, e.g. "/houston-balayage". */
+  path = "/",
+  /** Only the homepage should carry the LocalBusiness schema. */
+  includeSchema = false,
+} = Astro.props;
+
+const canonical = new URL(path, Astro.site).href;
+const schema = includeSchema ? localBusinessSchema({ description }) : null;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#08040f" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={business.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${business.url}/og-image.jpg`} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {
+      schema && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(schema)}
+        />
+      )
+    }
+
+    <!-- Per-page <head> additions, e.g. a Service schema block. -->
+    <slot name="head" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MTFB7DB57K"
+    ></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-MTFB7DB57K");
+    </script>
+  </head>
+  <body>
+    <Clouds />
+    <div class="content-layer">
+      <slot />
+    </div>
+  </body>
+</html>

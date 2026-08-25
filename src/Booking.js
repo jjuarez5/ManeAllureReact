@@ -11,7 +11,7 @@ function Booking() {
           First time clients must book a free consultation prior to any color
           appointments.
         </p>
-        <a href="https://maneallure.square.site/" target="blank">
+        <a href="https://themaneallure.glossgenius.com/" target="blank">
           <button
             type="submit"
             id="book-button"

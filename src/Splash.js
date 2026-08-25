@@ -18,6 +18,17 @@ function Splash() {
             className="mx-auto h-auto w-3/4 sm:object-cover sm:h-screen sm:w-1/2 sm:m-2"
           />
         </div>
+
+        <div className="text-center text-white mt-8 mb-12 px-4">
+          <h1 className="text-4xl font-bold sm:text-5xl">THE MANE ALLURE</h1>
+          <p className="text-2xl mt-3 sm:text-3xl">
+            Houston Hair Colorist &amp; Dimensional Color Specialist
+          </p>
+          <p className="text-xl mt-4 sm:text-2xl">
+            Balayage &bull; Foliayage &bull; Blonding &bull; Custom Color
+          </p>
+          <p className="text-xl mt-4 sm:text-2xl">By Alma Juarez</p>
+        </div>
       </div>
     </section>
   );

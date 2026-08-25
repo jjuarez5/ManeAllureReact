@@ -1,0 +1,56 @@
+---
+import { Image } from "astro:assets";
+import almabraids from "../images/almabraids.jpg";
+import red from "../images/red.jpg";
+import male from "../images/male.jpg";
+import female1 from "../images/female1.jpg";
+import female2 from "../images/female2.jpg";
+import female3 from "../images/female3.jpg";
+
+/*
+  Alt text doubles as image-search keywords. Replace the generic descriptions
+  below with the actual service in each photo (e.g. "Dimensional balayage on
+  brunette hair") -- Alma will know which service each shot is.
+
+  The photos themselves are deliberately NOT pixelated: the colour work is the
+  product, so it stays sharp inside a pixel frame.
+*/
+const photos = [
+  { src: almabraids, alt: "Braided hair styling by Alma Juarez at The Mane Allure, Houston", tag: "BRAIDS" },
+  { src: red, alt: "Custom red hair color by Alma Juarez at The Mane Allure, Houston", tag: "CUSTOM RED" },
+  { src: male, alt: "Men's white blonding by Alma Juarez at The Mane Allure, Houston", tag: "BLONDING" },
+  { src: female1, alt: "Hair color and styling by Alma Juarez at The Mane Allure, Houston", tag: "COLOR" },
+  { src: female2, alt: "Hair color and styling by Alma Juarez at The Mane Allure, Houston", tag: "COLOR" },
+  { src: female3, alt: "Hair color and styling by Alma Juarez at The Mane Allure, Houston", tag: "STYLING" },
+];
+---
+
+<section id="gallery" class="px-4 py-16">
+  <div class="mx-auto max-w-6xl">
+    <div class="mb-8">
+      <p class="pixel-kicker">LEVEL 04</p>
+      <h2 class="pixel-title mt-3 text-2xl sm:text-4xl">TROPHY CASE</h2>
+      <p class="mt-3 font-crt text-2xl text-lavender">
+        Recent work &middot; {photos.length} unlocked
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        photos.map((photo) => (
+          <figure class="crt-frame">
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              class="h-80 w-full object-cover"
+              loading="lazy"
+            />
+            <figcaption class="border-t-4 border-black bg-neon-pink px-3 py-2 font-pixel text-[9px] text-white">
+              {photo.tag}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>

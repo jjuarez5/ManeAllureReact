@@ -1,0 +1,73 @@
+---
+const yearsExperience = Math.abs(new Date().getFullYear() - 2011);
+---
+
+<section id="about-me" class="px-4 py-16">
+  <div class="mx-auto max-w-5xl">
+    <div class="mb-8">
+      <p class="pixel-kicker">LEVEL 01</p>
+      <h2 class="pixel-title mt-3 text-2xl sm:text-4xl">MEET THE COLORIST</h2>
+      <p class="mt-3 font-crt text-2xl text-lavender">
+        {yearsExperience} years licensed &middot; Master colorist
+      </p>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-3">
+      <div class="pixel-window md:col-span-2">
+        <div class="pixel-window__bar">
+          <span>ABOUT_ALMA.TXT</span>
+          <span class="flex gap-1">
+            <span class="pixel-window__btn"></span>
+            <span class="pixel-window__btn"></span>
+            <span class="pixel-window__btn"></span>
+          </span>
+        </div>
+        <div class="pixel-window__body">
+          <p>
+            Alma Palomares-Juarez is a licensed cosmetologist with over {
+              yearsExperience
+            } years of experience. Having gained her license out of Porter High
+            School in Porter, Texas, she started her career by mastering men's
+            hair cuts.
+          </p>
+          <p class="mt-3">
+            While taking a brief break from the industry, Alma maintained her
+            expertise doing freelance make-up, hair cut and color. Upon moving
+            to Seattle, Washington, she began as a colorist apprentice at the
+            prestigious{" "}
+            <a
+              href="https://www.genejuarez.com/locations/bellevue/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="underline decoration-2 underline-offset-2"
+              >Gene Juarez Salon and Spa</a
+            >, studying under several premier colorists before becoming a master
+            colorist herself.
+          </p>
+        </div>
+      </div>
+
+      <div class="pixel-window">
+        <div class="pixel-window__bar">
+          <span>SKILL TREE</span>
+          <span class="flex gap-1">
+            <span class="pixel-window__btn"></span>
+            <span class="pixel-window__btn"></span>
+            <span class="pixel-window__btn"></span>
+          </span>
+        </div>
+        <div class="pixel-window__body">
+          <p class="pixel-label mb-3">Mastery</p>
+          <ul class="space-y-1">
+            <li>▸ Balayage</li>
+            <li>▸ Foliayage</li>
+            <li>▸ Blonding</li>
+            <li>▸ Custom Color</li>
+            <li>▸ Color Correction</li>
+            <li>▸ Cutting &amp; Styling</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

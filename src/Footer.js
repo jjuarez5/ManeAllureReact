@@ -4,7 +4,8 @@ function Footer() {
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-center sm:flex-wrap">
           <div className="mb-4 sm:mb-0">
-            <span className="font-bold">TheManeAllure LLC</span> &copy; 2023
+            <span className="font-bold">TheManeAllure LLC</span> &copy;{" "}
+            {new Date().getFullYear()}
           </div>
           <div className="flex items-center space-x-4">
             {/* <a href="#" className="hover:text-gray-400">

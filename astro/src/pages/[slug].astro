@@ -1,0 +1,184 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import Marquee from "../components/Marquee.astro";
+import { business } from "../data/business.js";
+import { services } from "../data/services.js";
+
+/**
+ * Generates one static page per entry in services.js:
+ *   /houston-balayage, /houston-hair-color,
+ *   /houston-blonding, /houston-color-correction
+ */
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+
+const links = [
+  { href: "/#about-me", label: "ABOUT" },
+  { href: "/#services", label: "SERVICES" },
+  { href: "/#booking", label: "BOOKING" },
+  { href: "/#gallery", label: "GALLERY" },
+  { href: "/#chat", label: "MANEGPT" },
+  { href: "/#location", label: "VISIT" },
+];
+
+// Sibling services, for cross-linking at the foot of the page. Orphan pages
+// rank poorly, so every service page links to the other three.
+const others = services
+  .filter((entry) => entry.slug !== service.slug)
+  .sort((a, b) => a.order - b.order);
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: service.serviceType,
+  name: service.name,
+  description: service.metaDescription,
+  provider: {
+    "@type": "HairSalon",
+    name: business.name,
+    url: business.url,
+    telephone: business.telephone,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: business.address.street,
+      addressLocality: business.address.city,
+      addressRegion: business.address.region,
+      postalCode: business.address.postalCode,
+      addressCountry: business.address.country,
+    },
+  },
+  areaServed: { "@type": "City", name: business.address.city },
+  url: `${business.url}/${service.slug}`,
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: business.url,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: service.name,
+      item: `${business.url}/${service.slug}`,
+    },
+  ],
+};
+---
+
+<Layout
+  title={service.metaTitle}
+  description={service.metaDescription}
+  path={`/${service.slug}`}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(breadcrumbSchema)}
+    />
+  </Fragment>
+
+  <Navbar links={links} />
+
+  <main class="mx-auto max-w-4xl px-4 pt-44 pb-16 sm:pt-48">
+    <nav aria-label="Breadcrumb" class="mb-6 text-center font-crt text-xl">
+      <a href="/" class="text-lavender underline decoration-2 underline-offset-2">
+        Home
+      </a>
+      <span class="mx-2 text-neon-pink">▸</span>
+      <span class="text-white">{service.name}</span>
+    </nav>
+
+    <p class="pixel-kicker text-center">{service.kicker}</p>
+    <h1 class="pixel-title mt-4 text-center text-lg leading-relaxed sm:text-3xl">
+      {service.heading}
+    </h1>
+    <p class="mt-6 text-center font-crt text-2xl text-lavender">
+      {service.tagline} by master colorist {business.stylist.shortName}
+    </p>
+
+    <div class="mt-12 space-y-6 font-crt text-2xl leading-snug">
+      <p>{service.intro}</p>
+
+      {
+        service.sections.map((section) => (
+          <>
+            <h2 class="pixel-title--green pt-8 font-pixel text-sm sm:text-base">
+              {section.heading}
+            </h2>
+            <p>{section.body}</p>
+          </>
+        ))
+      }
+
+      <h2 class="pixel-title--green pt-8 font-pixel text-sm sm:text-base">
+        Book a consultation
+      </h2>
+      <p>
+        The Mane Allure is located at {business.address.street} in {
+          business.address.city
+        }, {business.address.region}. First-time clients must book a free
+        consultation before any color appointment.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 pt-4">
+        <a
+          href={business.bookingUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="pixel-btn"
+        >
+          BOOK NOW
+        </a>
+        <a href={`tel:${business.telephone}`} class="pixel-btn pixel-btn--pink">
+          ☎ {business.telephoneDisplay}
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Marquee text={`${service.name.toUpperCase()} IN HOUSTON`} />
+
+  <!-- Cross-links to the other services -->
+  <section class="mx-auto max-w-5xl px-4 py-16">
+    <h2 class="pixel-title mb-8 text-center font-pixel text-lg sm:text-2xl">
+      MORE STAGES
+    </h2>
+    <div class="grid gap-6 sm:grid-cols-3">
+      {
+        others.map((entry) => (
+          <a href={`/${entry.slug}`} class="pixel-window block">
+            <div class="pixel-window__bar">
+              <span>{entry.name.toUpperCase()}</span>
+              <span class="flex gap-1">
+                <span class="pixel-window__btn" />
+                <span class="pixel-window__btn" />
+                <span class="pixel-window__btn" />
+              </span>
+            </div>
+            <div class="pixel-window__body">
+              <p>{entry.cardBlurb}</p>
+              <p class="pixel-label mt-4">ENTER ▸</p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <Footer />
+</Layout>

@@ -26,13 +26,25 @@ function LocationInfo() {
             </a>
           </li>
         </ul>
-        <div className="mb-8">
-          <p>2101 Smith St STE 212</p>
-          <p>Houston, TX 77002</p>
-        </div>
+        {/*
+          Keep this address and phone identical to the HairSalon JSON-LD in
+          public/index.html and to the Google Business Profile. Conflicting
+          NAP data across those three places hurts local ranking.
+        */}
+        <address className="mb-8 not-italic text-center">
+          <p>3312 Marquart St</p>
+          <p>Houston, TX 77027</p>
+          <p className="mt-2">
+            <a href="tel:+1-281-832-0808" className="hover:bg-green-900">
+              (281) 832-0808
+            </a>
+          </p>
+        </address>
         <h3 className="text-xl">HOURS OF OPERATION</h3>
         <div className="flex justify-center mt-4 text-white">
           <div className="grid grid-row gap-1">
+            <div className=" text-center">Tuesday</div>
+            <div>9:00 AM - 5:00 PM</div>
             <div className=" text-center">Wednesday</div>
             <div>10:00 AM - 7:00 PM</div>
             <div className=" text-center">Thursday</div>
@@ -40,8 +52,8 @@ function LocationInfo() {
             <div className=" text-center">Friday</div>
             <div>10:00 AM - 7:00 PM</div>
             <div className=" text-center">Saturday</div>
-            <div>10:00 AM - 5:00 PM</div>
-            <div className=" text-center">Sun-Tue</div>
+            <div>10:00 AM - 6:00 PM</div>
+            <div className=" text-center">Sun-Mon</div>
             <div className="text-center">Closed</div>
           </div>
         </div>

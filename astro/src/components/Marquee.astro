@@ -1,0 +1,19 @@
+---
+const { text = "THE MANE ALLURE", repeat = 8 } = Astro.props;
+
+// The track is duplicated so the -50% scroll loops seamlessly.
+const items = Array.from({ length: repeat * 2 }, () => text);
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {
+      items.map((item) => (
+        <span class="flex items-center gap-10">
+          {item}
+          <span class="text-neon-yellow">★</span>
+        </span>
+      ))
+    }
+  </div>
+</div>

@@ -1,0 +1,89 @@
+---
+import { business } from "../data/business.js";
+
+const { address } = business;
+---
+
+<section id="location" class="px-4 py-16">
+  <div class="mx-auto max-w-4xl">
+    <div class="mb-8 text-center">
+      <p class="pixel-kicker">SAVE POINT</p>
+      <h2 class="pixel-title--green mt-3 font-pixel text-2xl sm:text-4xl">
+        {address.city.toUpperCase()}
+      </h2>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      <div class="pixel-window">
+        <div class="pixel-window__bar">
+          <span>LOCATION</span>
+          <span class="flex gap-1">
+            <span class="pixel-window__btn"></span>
+            <span class="pixel-window__btn"></span>
+            <span class="pixel-window__btn"></span>
+          </span>
+        </div>
+        <div class="pixel-window__body">
+          <address class="not-italic">
+            <p>{address.street}</p>
+            <p>{address.city}, {address.region} {address.postalCode}</p>
+            <p class="mt-3">
+              <a
+                href={`tel:${business.telephone}`}
+                class="underline decoration-2 underline-offset-2"
+              >
+                ☎ {business.telephoneDisplay}
+              </a>
+            </p>
+          </address>
+
+          <ul class="mt-4 flex flex-row gap-4">
+            <li>
+              <a
+                href={business.social.tiktok}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="pixel-label"
+              >
+                TIKTOK
+              </a>
+            </li>
+            <li>
+              <a
+                href={business.social.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="pixel-label"
+              >
+                INSTAGRAM
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pixel-window">
+        <div class="pixel-window__bar">
+          <span>HOURS OF OPERATION</span>
+          <span class="flex gap-1">
+            <span class="pixel-window__btn"></span>
+            <span class="pixel-window__btn"></span>
+            <span class="pixel-window__btn"></span>
+          </span>
+        </div>
+        <div class="pixel-window__body">
+          <dl class="space-y-1">
+            {
+              business.hoursDisplay.map((entry) => (
+                <div class="flex justify-between gap-4 border-b-2 border-dotted border-black/40 pb-1">
+                  <dt>{entry.label}</dt>
+                  <dd>{entry.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

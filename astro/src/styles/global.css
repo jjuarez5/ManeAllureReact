@@ -1,0 +1,545 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   THE MANE ALLURE -- 8-bit / anime design system
+
+   Two typefaces, used deliberately:
+     - Press Start 2P : headings, HUD, labels. Authentic 8-bit, but nearly
+                        unreadable below ~14px or in paragraphs.
+     - VT323          : body copy. Reads as a CRT terminal, stays legible at
+                        long lengths, which Press Start 2P does not.
+   ========================================================================== */
+
+@theme {
+  --font-pixel: "Press Start 2P", monospace;
+  --font-crt: "VT323", "Courier New", monospace;
+
+  --color-void: #08040f;
+  --color-void-2: #120a24;
+  --color-neon-pink: #ff4fc3;
+  --color-soft-pink: #ff8fd8;
+  --color-panel-pink: #f7a8dc;
+  --color-neon-green: #7cf07c;
+  --color-acid-green: #b6ff6e;
+  --color-neon-yellow: #ffe94a;
+  --color-lavender: #b9a7ff;
+  --color-periwinkle: #4b44d4;
+}
+
+:root {
+  --px: 4px; /* one "pixel" unit -- all borders/offsets are multiples */
+}
+
+/* --------------------------------------------------------------------------
+   Starfield: three offset dot layers rather than hundreds of DOM nodes.
+   -------------------------------------------------------------------------- */
+body {
+  background-color: var(--color-void);
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, #fff 99%, transparent),
+    radial-gradient(1.5px 1.5px at 74% 8%, var(--color-lavender) 99%, transparent),
+    radial-gradient(1.5px 1.5px at 38% 62%, #fff 99%, transparent),
+    radial-gradient(2px 2px at 88% 44%, var(--color-neon-yellow) 99%, transparent),
+    radial-gradient(1.5px 1.5px at 22% 84%, var(--color-soft-pink) 99%, transparent),
+    radial-gradient(1.5px 1.5px at 62% 92%, #fff 99%, transparent);
+  background-size: 420px 420px, 330px 330px, 500px 500px, 260px 260px, 380px 380px, 300px 300px;
+  color: #fff;
+  font-family: var(--font-crt);
+  image-rendering: pixelated;
+}
+
+/* Respect users who don't want motion; several effects below animate. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8-bit cloud layer (see Clouds.astro)
+   -------------------------------------------------------------------------- */
+.cloud-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.pixel-cloud {
+  position: absolute;
+  height: auto;
+  filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.35));
+  animation-name: cloud-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes cloud-drift {
+  from { transform: translateX(-8vw); }
+  to { transform: translateX(108vw); }
+}
+
+/* Page content sits above the clouds. */
+.content-layer {
+  position: relative;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Dual-screen handheld console (hero)
+   -------------------------------------------------------------------------- */
+.ds-shell {
+  background: linear-gradient(180deg, #ff6ccd 0%, #ff4fc3 55%, #d92b9c 100%);
+  border: var(--px) solid #000;
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 255, 255, 0.35),
+    calc(var(--px) * 2) calc(var(--px) * 2) 0 rgba(0, 0, 0, 0.65);
+  padding: 14px;
+}
+
+/* Black bezel around each screen. */
+.ds-screen {
+  background: #17131f;
+  border: var(--px) solid #000;
+  box-shadow: inset 0 0 0 2px #3b3350;
+  padding: 10px;
+}
+
+/* The lit screen area itself. */
+.ds-display {
+  position: relative;
+  background: radial-gradient(circle at 50% 20%, #1d1136 0%, #08040f 75%);
+  border: 3px solid #000;
+  overflow: hidden;
+}
+
+/* Faint scanlines over both screens. */
+.ds-display::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.18) 0 2px,
+    transparent 2px 4px
+  );
+}
+
+/* Hinge strip between the two halves. */
+.ds-hinge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 0;
+}
+
+.ds-hinge__dot {
+  width: 6px;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* D-pad, built from two crossing bars. */
+.ds-dpad {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 auto;
+}
+
+.ds-dpad::before,
+.ds-dpad::after {
+  content: "";
+  position: absolute;
+  background: #2b0d22;
+  border: 3px solid #000;
+}
+
+.ds-dpad::before {
+  left: 18px;
+  top: 0;
+  width: 18px;
+  height: 54px;
+}
+
+.ds-dpad::after {
+  top: 18px;
+  left: 0;
+  width: 54px;
+  height: 18px;
+}
+
+.ds-face-btns {
+  display: grid;
+  grid-template-columns: repeat(2, 20px);
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.ds-face-btn {
+  width: 20px;
+  height: 20px;
+  background: #2b0d22;
+  border: 3px solid #000;
+  border-radius: 50%;
+}
+
+/* Bottom screen "PRESS START" target. */
+.ds-start {
+  display: block;
+  width: 100%;
+  padding: 22px 12px;
+  text-align: center;
+  font-family: var(--font-pixel);
+  color: var(--color-acid-green);
+  text-shadow: 3px 3px 0 #000;
+  cursor: pointer;
+  transition: background 90ms steps(2);
+}
+
+.ds-start:hover,
+.ds-start:focus-visible {
+  background: rgba(124, 240, 124, 0.12);
+  outline: none;
+}
+
+.ds-start:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--color-acid-green);
+}
+
+/* --------------------------------------------------------------------------
+   Pixel chrome
+   -------------------------------------------------------------------------- */
+
+/* Stepped "staircase" corners -- the 8-bit look, done without images. */
+.pixel-box {
+  position: relative;
+  border: var(--px) solid #000;
+  box-shadow:
+    0 0 0 var(--px) currentColor,
+    calc(var(--px) * 2) calc(var(--px) * 2) 0 rgba(0, 0, 0, 0.55);
+  border-radius: 0;
+}
+
+/* A Win95-style dialog, as in the reference art. */
+.pixel-window {
+  background: var(--color-panel-pink);
+  border: var(--px) solid #000;
+  box-shadow: calc(var(--px) * 2) calc(var(--px) * 2) 0 rgba(0, 0, 0, 0.6);
+  color: #1b0a17;
+  border-radius: 0;
+}
+
+.pixel-window__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--color-neon-pink);
+  border-bottom: var(--px) solid #000;
+  padding: 6px 8px;
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000;
+}
+
+/* The three little window buttons. */
+.pixel-window__btn {
+  width: 12px;
+  height: 12px;
+  background: var(--color-panel-pink);
+  border: 2px solid #000;
+  flex: 0 0 auto;
+}
+
+.pixel-window__body {
+  padding: 14px 16px;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+/* Yellow label plate used for panel headings in the reference. */
+.pixel-label {
+  display: inline-block;
+  background: var(--color-neon-yellow);
+  border: 3px solid #000;
+  padding: 4px 10px;
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: #1b0a17;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+.pixel-btn {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  letter-spacing: 1px;
+  padding: 16px 26px;
+  color: #08040f;
+  background: var(--color-acid-green);
+  border: var(--px) solid #000;
+  box-shadow: calc(var(--px) * 2) calc(var(--px) * 2) 0 #000;
+  transition: transform 80ms steps(2), box-shadow 80ms steps(2);
+  cursor: pointer;
+}
+
+.pixel-btn:hover,
+.pixel-btn:focus-visible {
+  background: var(--color-neon-yellow);
+  transform: translate(var(--px), var(--px));
+  box-shadow: var(--px) var(--px) 0 #000;
+}
+
+.pixel-btn:active {
+  transform: translate(calc(var(--px) * 2), calc(var(--px) * 2));
+  box-shadow: 0 0 0 #000;
+}
+
+.pixel-btn--pink {
+  background: var(--color-neon-pink);
+  color: #fff;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.pixel-btn--pink:hover,
+.pixel-btn--pink:focus-visible {
+  background: var(--color-soft-pink);
+}
+
+/* --------------------------------------------------------------------------
+   Headings
+   -------------------------------------------------------------------------- */
+.pixel-title {
+  font-family: var(--font-pixel);
+  line-height: 1.4;
+  color: var(--color-neon-pink);
+  /* Hard 8-bit outline: four offsets, no blur. */
+  text-shadow:
+    3px 0 0 #000, -3px 0 0 #000, 0 3px 0 #000, 0 -3px 0 #000,
+    6px 6px 0 var(--color-neon-green);
+}
+
+.pixel-title--green {
+  color: var(--color-acid-green);
+  text-shadow:
+    3px 0 0 #000, -3px 0 0 #000, 0 3px 0 #000, 0 -3px 0 #000,
+    6px 6px 0 var(--color-neon-pink);
+}
+
+.pixel-kicker {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: var(--color-neon-green);
+  letter-spacing: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   HUD (top status bar)
+   -------------------------------------------------------------------------- */
+.hud {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  background: var(--color-void);
+  border-bottom: var(--px) solid var(--color-neon-pink);
+}
+
+.hud-bar {
+  width: 84px;
+  height: 12px;
+  border: 3px solid #fff;
+  background: #2a0f2a;
+  padding: 1px;
+}
+
+.hud-bar__fill {
+  height: 100%;
+  background: var(--color-neon-green);
+}
+
+/* --------------------------------------------------------------------------
+   Scrolling marquee divider
+   -------------------------------------------------------------------------- */
+.marquee {
+  overflow: hidden;
+  background: var(--color-periwinkle);
+  border-top: var(--px) solid #000;
+  border-bottom: var(--px) solid #000;
+  padding: 10px 0;
+}
+
+.marquee__track {
+  display: inline-flex;
+  gap: 40px;
+  white-space: nowrap;
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000;
+  animation: marquee-scroll 22s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* --------------------------------------------------------------------------
+   Photo frames.
+
+   The salon's photos are the product, so they are NOT pixelated -- they sit
+   inside pixel frames with a faint CRT scanline overlay instead.
+   -------------------------------------------------------------------------- */
+.crt-frame {
+  position: relative;
+  border: var(--px) solid #000;
+  box-shadow:
+    0 0 0 var(--px) var(--color-neon-pink),
+    calc(var(--px) * 2) calc(var(--px) * 2) 0 rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  background: #000;
+}
+
+.crt-frame img {
+  image-rendering: auto; /* keep the hair work sharp */
+  display: block;
+}
+
+.crt-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.16) 0 2px,
+    transparent 2px 4px
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Decorative CSS sprites (no image files)
+   -------------------------------------------------------------------------- */
+.sprite-star {
+  width: 24px;
+  height: 24px;
+  background: var(--color-neon-yellow);
+  clip-path: polygon(
+    50% 0%, 61% 35%, 98% 35%, 68% 57%,
+    79% 91%, 50% 70%, 21% 91%, 32% 57%,
+    2% 35%, 39% 35%
+  );
+  animation: sprite-bob 2.4s steps(4) infinite alternate;
+}
+
+.sprite-heart {
+  width: 18px;
+  height: 18px;
+  background: var(--color-neon-pink);
+  clip-path: polygon(
+    30% 0%, 50% 18%, 70% 0%, 100% 25%,
+    100% 55%, 50% 100%, 0% 55%, 0% 25%
+  );
+}
+
+@keyframes sprite-bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
+}
+
+/* Blinking "press start" prompt. */
+.blink {
+  animation: blink-step 1.1s steps(1) infinite;
+}
+
+@keyframes blink-step {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* ==========================================================================
+   ManeGPT -- restyled as an RPG dialogue box
+   ========================================================================== */
+.message-container {
+  overflow-y: auto;
+  max-height: 320px;
+  border: var(--px) solid #000;
+  box-shadow: inset 0 0 0 2px var(--color-periwinkle);
+  padding: 12px;
+  margin-bottom: 16px;
+  background: #1a1030;
+  border-radius: 0;
+}
+
+.user-message,
+.assistant-message {
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border: 3px solid #000;
+  font-family: var(--font-crt);
+  font-size: 20px;
+  line-height: 1.2;
+  border-radius: 0;
+}
+
+.user-message {
+  text-align: left;
+  background: var(--color-lavender);
+  color: #12071f;
+}
+
+.assistant-message {
+  text-align: left;
+  background: var(--color-acid-green);
+  color: #0d2408;
+}
+
+.message-input {
+  margin-top: 16px;
+}
+
+.message-input input {
+  font-family: var(--font-crt);
+  font-size: 20px;
+  border: var(--px) solid #000;
+  background: #fff;
+  color: #12071f;
+  border-radius: 0;
+}
+
+.message-input input::placeholder {
+  color: #6b5c7a;
+}
+
+.loading-bubbles {
+  margin-top: 12px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.bubble {
+  background-color: var(--color-neon-pink);
+  width: 10px;
+  height: 10px;
+  border: 2px solid #000;
+  border-radius: 0; /* square "pixels", not dots */
+  margin: 0 5px;
+  animation: bubbleScale 0.6s steps(2) infinite alternate;
+}
+
+@keyframes bubbleScale {
+  to {
+    transform: translateY(-6px);
+  }
+}
