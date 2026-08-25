@@ -73,15 +73,7 @@ body {
 .pixel-cloud {
   position: absolute;
   height: auto;
-  filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.35));
-  animation-name: cloud-drift;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-@keyframes cloud-drift {
-  from { transform: translateX(-8vw); }
-  to { transform: translateX(108vw); }
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.35));
 }
 
 /* Page content sits above the clouds. */

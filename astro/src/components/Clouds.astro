@@ -6,19 +6,22 @@
  * the blocks stay hard-edged at any scale -- a scaled-up bitmap would blur.
  * The gradient reuses the site's existing lavender -> periwinkle -> pink.
  *
+ * Static by design: the clouds do not drift.
+ *
  * Purely decorative: aria-hidden, pointer-events none, and it sits behind all
  * content.
  */
 
-// Each cloud: position, width, opacity, and drift duration/delay.
+// Each cloud: a fixed position, size and opacity. Static -- no drift.
+// Positions favour the edges, where they read behind the centred content.
 const clouds = [
-  { top: "6%", left: "-4%", width: "220px", opacity: 0.55, duration: "48s", delay: "0s" },
-  { top: "18%", left: "72%", width: "300px", opacity: 0.4, duration: "62s", delay: "-8s" },
-  { top: "34%", left: "8%", width: "180px", opacity: 0.35, duration: "55s", delay: "-20s" },
-  { top: "48%", left: "78%", width: "240px", opacity: 0.45, duration: "70s", delay: "-30s" },
-  { top: "63%", left: "-2%", width: "260px", opacity: 0.3, duration: "58s", delay: "-12s" },
-  { top: "78%", left: "62%", width: "200px", opacity: 0.42, duration: "66s", delay: "-24s" },
-  { top: "90%", left: "20%", width: "160px", opacity: 0.3, duration: "52s", delay: "-40s" },
+  { top: "7%", left: "4%", width: "96px", opacity: 0.5 },
+  { top: "15%", left: "80%", width: "124px", opacity: 0.4 },
+  { top: "31%", left: "11%", width: "80px", opacity: 0.34 },
+  { top: "44%", left: "84%", width: "104px", opacity: 0.42 },
+  { top: "58%", left: "6%", width: "112px", opacity: 0.3 },
+  { top: "72%", left: "76%", width: "88px", opacity: 0.38 },
+  { top: "86%", left: "17%", width: "72px", opacity: 0.3 },
 ];
 ---
 
@@ -29,7 +32,7 @@ const clouds = [
         class="pixel-cloud"
         viewBox="0 0 16 7"
         shape-rendering="crispEdges"
-        style={`top:${cloud.top};left:${cloud.left};width:${cloud.width};opacity:${cloud.opacity};animation-duration:${cloud.duration};animation-delay:${cloud.delay};`}
+        style={`top:${cloud.top};left:${cloud.left};width:${cloud.width};opacity:${cloud.opacity};`}
       >
         <defs>
           <linearGradient id={`cloud-grad-${index}`} x1="0" y1="0" x2="0" y2="1">
