@@ -1,27 +1,42 @@
 ---
 import { Image } from "astro:assets";
-import almabraids from "../images/almabraids.jpg";
-import red from "../images/red.jpg";
-import male from "../images/male.jpg";
-import female1 from "../images/female1.jpg";
-import female2 from "../images/female2.jpg";
-import female3 from "../images/female3.jpg";
+import bronze from "../images/bronze.jpg";
+import izzy from "../images/izzy.jpg";
+import glasses from "../images/glasses.jpg";
+import layers from "../images/layers.jpg";
 
 /*
-  Alt text doubles as image-search keywords. Replace the generic descriptions
-  below with the actual service in each photo (e.g. "Dimensional balayage on
-  brunette hair") -- Alma will know which service each shot is.
+  Alt text doubles as image-search keywords, so each description names the
+  service and the city rather than just describing a person.
+
+  Alma should still confirm the service names below -- they are read from the
+  photos, so "bronze" vs "copper" and "layers" vs "butterfly cut" are my best
+  reading of the work, not her formulation.
 
   The photos themselves are deliberately NOT pixelated: the colour work is the
   product, so it stays sharp inside a pixel frame.
 */
 const photos = [
-  { src: almabraids, alt: "Braided hair styling by Alma Juarez at The Mane Allure, Houston", tag: "BRAIDS" },
-  { src: red, alt: "Custom red hair color by Alma Juarez at The Mane Allure, Houston", tag: "CUSTOM RED" },
-  { src: male, alt: "Men's white blonding by Alma Juarez at The Mane Allure, Houston", tag: "BLONDING" },
-  { src: female1, alt: "Hair color and styling by Alma Juarez at The Mane Allure, Houston", tag: "COLOR" },
-  { src: female2, alt: "Hair color and styling by Alma Juarez at The Mane Allure, Houston", tag: "COLOR" },
-  { src: female3, alt: "Hair color and styling by Alma Juarez at The Mane Allure, Houston", tag: "STYLING" },
+  {
+    src: bronze,
+    alt: "Bronze copper hair color with face-framing blowout by Alma Juarez at The Mane Allure, Houston",
+    tag: "BRONZE COPPER",
+  },
+  {
+    src: izzy,
+    alt: "Deep auburn red hair color on long layers by Alma Juarez at The Mane Allure, Houston",
+    tag: "AUBURN RED",
+  },
+  {
+    src: glasses,
+    alt: "Jet black hair color with curtain bangs and long layers by Alma Juarez at The Mane Allure, Houston",
+    tag: "JET BLACK",
+  },
+  {
+    src: layers,
+    alt: "Long layered cut on blue-black hair by Alma Juarez at The Mane Allure, Houston",
+    tag: "LONG LAYERS",
+  },
 ];
 ---
 
@@ -35,14 +50,14 @@ const photos = [
       </p>
     </div>
 
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {
         photos.map((photo) => (
           <figure class="crt-frame">
             <Image
               src={photo.src}
               alt={photo.alt}
-              class="h-80 w-full object-cover"
+              class="h-96 w-full object-cover object-top"
               loading="lazy"
             />
             <figcaption class="border-t-4 border-black bg-neon-pink px-3 py-2 font-pixel text-[9px] text-white">
