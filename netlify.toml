@@ -14,6 +14,6 @@
   publish = "dist"
 
 [build.environment]
-  # Astro 7 requires a modern Node; pin it so the build doesn't fall back to
-  # whatever default Netlify happens to have.
-  NODE_VERSION = "20"
+  # Astro 7 requires node >=22.12.0, and undici in its tree requires >=22.19.0.
+  # Node 20 fails the build outright. 24 matches local development.
+  NODE_VERSION = "24"
