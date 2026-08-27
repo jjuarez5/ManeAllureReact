@@ -57,7 +57,7 @@ const photos = [
             <Image
               src={photo.src}
               alt={photo.alt}
-              class="h-96 w-full object-cover object-top"
+              class="aspect-[2/3] w-full object-cover object-top sm:aspect-auto sm:h-96"
               loading="lazy"
             />
             <figcaption class="border-t-4 border-black bg-neon-pink px-3 py-2 font-pixel text-[9px] text-white">

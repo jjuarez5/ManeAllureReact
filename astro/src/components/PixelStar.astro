@@ -1,0 +1,79 @@
+---
+/*
+  Title-screen star sprite.
+
+  Drawn as a pixel grid rather than an image file: it stays crisp at any size,
+  costs no image request, and recolours from the palette tokens. The grid below
+  is the artwork -- edit a character to edit the sprite.
+
+    K = black outline   Y = star body   P = blush   . = transparent
+
+  The rows are run-length encoded into <rect>s at build time, so the browser
+  gets ~60 rects instead of 432 one-pixel squares.
+*/
+const PIXELS = [
+  "...........KK...........",
+  "..........KYYK..........",
+  "..........KYYK..........",
+  ".........KYYYYK.........",
+  ".........KYYYYK.........",
+  ".....KKKKYYYYYYKKKK.....",
+  "..KKKYYYYYYYYYYYYYYKKK..",
+  "...KYYYYKKYYYYKKYYYYK...",
+  "...KYYYYKKYYYYKKYYYYK...",
+  "....KYYYKKYYYYKKYYYK....",
+  ".....KYYYYYYYYYYYYK.....",
+  "......KYYYYYYYYYYK......",
+  "......KPKYYYYYYKPK......",
+  "......KYYKKKKKKYYK......",
+  "......KYYYYYYYYYYK......",
+  "......KYYYKKKKYYYK......",
+  "......KYKK....KKYK......",
+  "......KK........KK......",
+];
+
+const COLORS = {
+  K: "#000000",
+  Y: "var(--color-neon-yellow, #ffe94a)",
+  P: "var(--color-soft-pink, #ff8fd8)",
+};
+
+const WIDTH = PIXELS[0].length;
+const HEIGHT = PIXELS.length;
+
+const rects = [];
+PIXELS.forEach((row, y) => {
+  let x = 0;
+  while (x < row.length) {
+    const ch = row[x];
+    if (ch === ".") {
+      x += 1;
+      continue;
+    }
+    let run = 1;
+    while (row[x + run] === ch) run += 1;
+    rects.push({ x, y, w: run, fill: COLORS[ch] });
+    x += run;
+  }
+});
+
+const { class: className = "" } = Astro.props;
+---
+
+<!--
+  Decorative: the <h1> directly below already names the salon, so announcing
+  the sprite too would just repeat it.
+-->
+<svg
+  class={className}
+  viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+  shape-rendering="crispEdges"
+  aria-hidden="true"
+  focusable="false"
+>
+  {
+    rects.map((r) => (
+      <rect x={r.x} y={r.y} width={r.w} height="1" fill={r.fill} />
+    ))
+  }
+</svg>

@@ -33,8 +33,8 @@ export const business = {
     tiktok: "https://www.tiktok.com/@themanealluree",
   },
   services: [
+    "Hair Cuts",
     "Balayage",
-    "Foliayage",
     "Blonding",
     "Custom Color",
     "Color Correction",

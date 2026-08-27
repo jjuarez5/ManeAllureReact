@@ -444,6 +444,15 @@ body {
   );
 }
 
+/* Title-screen star (see PixelStar.astro). Bobs on the same cadence as the
+   decorative sprites; the global reduced-motion rule stops it. */
+.pixel-star {
+  display: block;
+  height: auto;
+  filter: drop-shadow(0 0 6px rgba(255, 233, 74, 0.4));
+  animation: sprite-bob 2.4s steps(4) infinite alternate;
+}
+
 @keyframes sprite-bob {
   from { transform: translateY(0); }
   to { transform: translateY(-6px); }

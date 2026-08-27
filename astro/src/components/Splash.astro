@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import AlmaLogo from "../images/Alma Logo Transparent.png";
 import Almabw from "../images/Almabw.jpg";
+import PixelStar from "./PixelStar.astro";
 import { business } from "../data/business.js";
 
 const services = business.services.filter((s) => s !== "Color Correction");
@@ -18,12 +18,7 @@ const services = business.services.filter((s) => s !== "Color Correction");
       <!-- ---------- TOP SCREEN ---------- -->
       <div class="ds-screen">
         <div class="ds-display px-4 py-8 text-center sm:px-8 sm:py-10">
-          <Image
-            src={AlmaLogo}
-            alt="The Mane Allure logo"
-            class="mx-auto mb-5 w-20 sm:w-24"
-            loading="eager"
-          />
+          <PixelStar class="pixel-star mx-auto mb-5 w-24 sm:w-28" />
 
           <h1 class="pixel-title text-base leading-relaxed sm:text-2xl">
             THE MANE ALLURE
