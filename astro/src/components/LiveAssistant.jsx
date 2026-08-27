@@ -8,6 +8,85 @@ const GREETING = {
   role: "assistant",
 };
 
+/** Inline tags the FAQ service is allowed to send. Everything else is dropped. */
+const ALLOWED_TAGS = new Set(["A", "B", "STRONG", "I", "EM", "BR", "P"]);
+const ALLOWED_PROTOCOLS = new Set(["http:", "https:", "mailto:", "tel:"]);
+/** Dropped with their contents, rather than unwrapped to text. */
+const STRIPPED_TAGS = new Set(["SCRIPT", "STYLE", "IFRAME", "OBJECT", "EMBED"]);
+
+/**
+ * The FAQ backend returns HTML (links to booking and Instagram), so the text
+ * cannot simply be printed -- React would escape it and the user would see raw
+ * <a href=...> markup.
+ *
+ * It also cannot be passed to dangerouslySetInnerHTML: the response is remote
+ * input, and one compromised or malformed reply would inject script into the
+ * page. So the markup is parsed and rebuilt from an allowlist, keeping only
+ * safe inline tags and http(s)/mailto/tel links.
+ *
+ * Incoming `class` attributes are deliberately ignored -- the service sends
+ * class='text-white', which is invisible against these message bubbles.
+ */
+function renderRichText(html, keyPrefix = "n") {
+  // Runs during the static build too, where DOMParser does not exist. The only
+  // message rendered then is the plain-text greeting.
+  if (typeof DOMParser === "undefined") return html;
+
+  let body;
+  try {
+    body = new DOMParser().parseFromString(String(html), "text/html").body;
+  } catch {
+    return html;
+  }
+
+  const convert = (nodes) =>
+    Array.from(nodes).map((node, index) => {
+      const key = `${keyPrefix}-${index}`;
+
+      if (node.nodeType === Node.TEXT_NODE) return node.textContent;
+      if (node.nodeType !== Node.ELEMENT_NODE) return null;
+
+      const tag = node.tagName;
+
+      // Executable/embedded content: drop the node and everything in it, so
+      // script bodies don't leak through as visible text.
+      if (STRIPPED_TAGS.has(tag)) return null;
+
+      // Unknown tag: drop the wrapper, keep the text inside it.
+      if (!ALLOWED_TAGS.has(tag)) return convert(node.childNodes);
+
+      if (tag === "BR") return <br key={key} />;
+
+      if (tag === "A") {
+        let href;
+        try {
+          href = new URL(node.getAttribute("href"), window.location.origin);
+        } catch {
+          return convert(node.childNodes); // unparseable href -> plain text
+        }
+        if (!ALLOWED_PROTOCOLS.has(href.protocol)) {
+          return convert(node.childNodes);
+        }
+        return (
+          <a
+            key={key}
+            href={href.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-2 underline-offset-2"
+          >
+            {convert(node.childNodes)}
+          </a>
+        );
+      }
+
+      const Tag = tag.toLowerCase();
+      return <Tag key={key}>{convert(node.childNodes)}</Tag>;
+    });
+
+  return convert(body.childNodes);
+}
+
 /**
  * The only interactive component on the site, hydrated as an Astro island.
  *
@@ -97,7 +176,8 @@ export default function LiveAssistant() {
                   : "assistant-message message"
               }
             >
-              <strong>{message.sender}:</strong> {message.text}
+              <strong>{message.sender}:</strong>{" "}
+              {renderRichText(message.text, `m${index}`)}
             </div>
           ))}
 
