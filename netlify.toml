@@ -1,0 +1,19 @@
+# Netlify build configuration.
+#
+# The Astro site lives in astro/, not the repo root. Without `base`, Netlify
+# builds the old Create React App project at the root and publishes that
+# instead -- which is why pushes appeared to deploy but the design never
+# changed.
+#
+# With `base` set, `command` runs inside astro/ and `publish` is resolved
+# relative to it, so this publishes astro/dist.
+
+[build]
+  base = "astro"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Astro 7 requires a modern Node; pin it so the build doesn't fall back to
+  # whatever default Netlify happens to have.
+  NODE_VERSION = "20"
